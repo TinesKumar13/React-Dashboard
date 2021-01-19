@@ -1,25 +1,88 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import SimpleCard from "./components/Card";
+import db from "./firebase.config";
+import "./App.css";
+import PersonIcon from "@material-ui/icons/Person";
+import { States } from "./components/States";
+import { Link } from "react-router-dom";
+import Piechart from "./components/pieChart";
+import Alltime from "./components/Alltime";
 
-function App() {
+const App = () => {
+  const [cases, setCases] = useState();
+  const [all, setAll] = useState();
+
+  useEffect(() => {
+    fetchCases();
+  }, []);
+
+  const fetchCases = async () => {
+    db.collection("state_cases")
+      .orderBy("date")
+      .get()
+      .then((querySnapshot) => {
+        const data = querySnapshot.docs.map((doc) => doc.data());
+        const values = data[data.length - 1];
+        setAll([data]);
+        setCases([values]);
+      });
+  };
+
+  cases && console.log(cases[0]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="main__Container">
+      <div className="main__Header">
+        <h1>CovInfo</h1>
+        <div className="main__Account">
+          <Link to="/updateCases" className="links">
+            Update Cases
+          </Link>
+          <Link to="/" className="links">
+            Logout
+          </Link>
+          <PersonIcon />
+        </div>
+      </div>
+
+      <div className="stats_Container">
+        <div className="stats__Main">
+          {cases && (
+            <div className="stats__Shower">
+              <SimpleCard
+                title="Total Number Of Cases"
+                cases={cases[0].newCase}
+                colour="#ffc658"
+                date={cases[0].date}
+                total={cases[0].totalCase}
+              />
+              <SimpleCard
+                title="Total Deaths"
+                cases={cases[0].newDeath}
+                colour="#FF6666"
+                date={cases[0].date}
+                total={cases[0].totalDeath}
+              />
+              <SimpleCard
+                title="Total Recoveries"
+                cases={cases[0].newRecovery}
+                colour="#7AFF66"
+                date={cases[0].date}
+                total={cases[0].totalRecovery}
+              />
+            </div>
+          )}
+          <div className="piechart__Stats">
+            {cases && <Piechart cases={cases} />}
+            {cases && <Alltime cases={all} />}
+          </div>
+        </div>
+        <div className="states_Container">
+          {cases && <States date={cases[0].date} />}
+        </div>
+      </div>
     </div>
   );
-}
+};
 
 export default App;

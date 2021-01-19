@@ -1,38 +1,77 @@
-.App {
-  text-align: center;
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.main__Header {
+  display: flex;
+  width: 95%;
+  margin: auto;
+  justify-content: space-between;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+h1 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 100;
+  font-size: 3rem;
+  margin: 20px 40px 20px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.main__Account {
+  width: 10%;
+  display: flex;
+  margin: 40px 40px 20px;
+  justify-content: space-evenly;
+}
+
+h3 {
+  font-family: "Poppins", sans-serif;
+  font-weight: lighter;
+  font-size: 1rem;
+}
+
+.stats_Container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.stats__Shower {
+  display: flex;
+  align-items: center;
+
+  margin-left: 25rem;
+  flex: 1;
+}
+
+.stats__Main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+}
+.states_Container {
+  flex: 1;
+  margin-left: 15rem;
 }
 
-.App-link {
-  color: #61dafb;
+.links {
+  text-decoration: none;
+  color: black;
+  margin-right: 2rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.cases__Form {
+  margin-top: 20rem;
+  height: 30rem;
+  width: 40rem;
+  position: absolute;
+  left: 50rem;
+}
+
+.piechart__Stats {
+  display: flex;
+  align-items: center;
+  position: relative;
+  left: 20rem;
 }
