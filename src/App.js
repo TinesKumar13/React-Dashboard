@@ -7,6 +7,7 @@ import { States } from "./components/States";
 import { Link } from "react-router-dom";
 import Piechart from "./components/pieChart";
 import Alltime from "./components/Alltime";
+import NegeriStat from "./components/funnelChart";
 
 const App = () => {
   const [cases, setCases] = useState();
@@ -27,8 +28,6 @@ const App = () => {
         setCases([values]);
       });
   };
-
-  cases && console.log(cases[0]);
 
   return (
     <div className="main__Container">
@@ -76,9 +75,10 @@ const App = () => {
             {cases && <Piechart cases={cases} />}
             {cases && <Alltime cases={all} />}
           </div>
+          {cases && <NegeriStat cases={cases} />}
         </div>
         <div className="states_Container">
-          {cases && <States date={cases[0].date} />}
+          <States />
         </div>
       </div>
     </div>

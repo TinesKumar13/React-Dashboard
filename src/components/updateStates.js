@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
   form: {
     position: "absolute",
-    left: "47rem",
+    left: "46rem",
   },
   alert: {
     position: "absolute",
@@ -43,7 +43,20 @@ const useStyles = makeStyles((theme) => ({
 const UpdateStates = () => {
   const [selangor, setSelangor] = useState("");
   const [johor, setJohor] = useState("");
-
+  const [kedah, setKedah] = useState("");
+  const [kelantan, setKelantan] = useState("");
+  const [melaka, setMelaka] = useState("");
+  const [sembilan, setSembilan] = useState("");
+  const [pahang, setPahang] = useState("");
+  const [penang, setPenang] = useState("");
+  const [perak, setPerak] = useState("");
+  const [perlis, setPerlis] = useState("");
+  const [sabah, setSabah] = useState("");
+  const [sarawak, setSarawak] = useState("");
+  const [terengganu, setTerengganu] = useState("");
+  const [lumpur, setLumpur] = useState("");
+  const [labuan, setLabuan] = useState("");
+  const [putrajaya, setPutrajaya] = useState("");
   const [deaths, setDeaths] = useState("");
   const [recoveries, setRecoveries] = useState("");
   const [success, setSuccess] = useState(false);
@@ -87,10 +100,27 @@ const UpdateStates = () => {
       });
   };
 
-  console.log(prev);
-
   const handleSubmit = (e) => {
-    if (selangor === "" || johor === "" || recoveries === "" || deaths === "") {
+    if (
+      selangor === "" ||
+      johor === "" ||
+      kedah === "" ||
+      kelantan === "" ||
+      melaka === "" ||
+      sembilan === "" ||
+      pahang === "" ||
+      penang === "" ||
+      perak === "" ||
+      perlis === "" ||
+      sabah === "" ||
+      sarawak === "" ||
+      terengganu === "" ||
+      lumpur === "" ||
+      labuan === "" ||
+      putrajaya === "" ||
+      recoveries === "" ||
+      deaths === ""
+    ) {
       return (<UpdateStates />), setFailure(true);
     }
     db.collection("state_cases")
@@ -107,15 +137,130 @@ const UpdateStates = () => {
             new_case: parseInt(johor),
             total_case: parseInt(johor) + prev.negeri[1].total_case,
           },
+          {
+            name: "Kedah",
+            new_case: parseInt(kedah),
+            total_case: parseInt(kedah) + prev.negeri[2].total_case,
+          },
+          {
+            name: "Kelantan",
+            new_case: parseInt(kelantan),
+            total_case: parseInt(kelantan) + prev.negeri[3].total_case,
+          },
+          {
+            name: "Melaka",
+            new_case: parseInt(melaka),
+            total_case: parseInt(melaka) + prev.negeri[4].total_case,
+          },
+          {
+            name: "Negeri Sembilan",
+            new_case: parseInt(sembilan),
+            total_case: parseInt(sembilan) + prev.negeri[5].total_case,
+          },
+          {
+            name: "Pahang",
+            new_case: parseInt(pahang),
+            total_case: parseInt(pahang) + prev.negeri[6].total_case,
+          },
+          {
+            name: "Penang",
+            new_case: parseInt(penang),
+            total_case: parseInt(penang) + prev.negeri[7].total_case,
+          },
+          {
+            name: "Perak",
+            new_case: parseInt(perak),
+            total_case: parseInt(perak) + prev.negeri[8].total_case,
+          },
+          {
+            name: "Perlis",
+            new_case: parseInt(perlis),
+            total_case: parseInt(perlis) + prev.negeri[9].total_case,
+          },
+          {
+            name: "Sabah",
+            new_case: parseInt(sabah),
+            total_case: parseInt(sabah) + prev.negeri[10].total_case,
+          },
+          {
+            name: "Sarawak",
+            new_case: parseInt(sarawak),
+            total_case: parseInt(sarawak) + prev.negeri[11].total_case,
+          },
+          {
+            name: "Terengganu",
+            new_case: parseInt(terengganu),
+            total_case: parseInt(terengganu) + prev.negeri[12].total_case,
+          },
+          {
+            name: "Kuala Lumpur",
+            new_case: parseInt(lumpur),
+            total_case: parseInt(lumpur) + prev.negeri[13].total_case,
+          },
+          {
+            name: "Labuan",
+            new_case: parseInt(labuan),
+            total_case: parseInt(labuan) + prev.negeri[14].total_case,
+          },
+          {
+            name: "Putrajaya",
+            new_case: parseInt(putrajaya),
+            total_case: parseInt(putrajaya) + prev.negeri[15].total_case,
+          },
         ],
-        newCase: parseInt(johor) + parseInt(selangor),
+        newCase:
+          parseInt(johor) +
+          parseInt(selangor) +
+          parseInt(kedah) +
+          parseInt(kelantan) +
+          parseInt(melaka) +
+          parseInt(sembilan) +
+          parseInt(pahang) +
+          parseInt(penang) +
+          parseInt(perak) +
+          parseInt(perlis) +
+          parseInt(sabah) +
+          parseInt(sarawak) +
+          parseInt(terengganu) +
+          parseInt(lumpur) +
+          parseInt(labuan) +
+          parseInt(putrajaya),
         newDeath: parseInt(deaths),
         newRecovery: parseInt(recoveries),
         totalCase:
           parseInt(selangor) +
           prev.negeri[0].total_case +
           parseInt(johor) +
-          prev.negeri[1].total_case,
+          prev.negeri[1].total_case +
+          parseInt(kedah) +
+          prev.negeri[2].total_case +
+          parseInt(kelantan) +
+          prev.negeri[3].total_case +
+          parseInt(melaka) +
+          prev.negeri[4].total_case +
+          parseInt(sembilan) +
+          prev.negeri[5].total_case +
+          parseInt(pahang) +
+          prev.negeri[6].total_case +
+          parseInt(penang) +
+          prev.negeri[7].total_case +
+          parseInt(perak) +
+          prev.negeri[8].total_case +
+          parseInt(perlis) +
+          prev.negeri[9].total_case +
+          parseInt(sabah) +
+          prev.negeri[10].total_case +
+          parseInt(sarawak) +
+          prev.negeri[11].total_case +
+          parseInt(terengganu) +
+          prev.negeri[12].total_case +
+          parseInt(lumpur) +
+          prev.negeri[13].total_case +
+          parseInt(labuan) +
+          prev.negeri[14].total_case +
+          parseInt(putrajaya) +
+          prev.negeri[15].total_case,
+
         totalRecovery: parseInt(recoveries) + prev.totalRecovery,
         totalDeath: parseInt(deaths) + prev.totalDeath,
       })
@@ -159,6 +304,146 @@ const UpdateStates = () => {
           type="number"
           onChange={(e) => setJohor(e.target.value)}
           value={johor}
+        />
+        <TextField
+          required
+          id="outlined-basic"
+          label="Kedah"
+          variant="outlined"
+          className={classes.text}
+          type="number"
+          onChange={(e) => setKedah(e.target.value)}
+          value={kedah}
+        />
+        <TextField
+          required
+          id="outlined-basic"
+          label="Kelantan"
+          variant="outlined"
+          className={classes.text}
+          type="number"
+          onChange={(e) => setKelantan(e.target.value)}
+          value={kelantan}
+        />
+        <TextField
+          required
+          id="outlined-basic"
+          label="Melaka"
+          variant="outlined"
+          className={classes.text}
+          type="number"
+          onChange={(e) => setMelaka(e.target.value)}
+          value={melaka}
+        />
+        <TextField
+          required
+          id="outlined-basic"
+          label="Negeri Sembilan"
+          variant="outlined"
+          className={classes.text}
+          type="number"
+          onChange={(e) => setSembilan(e.target.value)}
+          value={sembilan}
+        />
+        <TextField
+          required
+          id="outlined-basic"
+          label="Pahang"
+          variant="outlined"
+          className={classes.text}
+          type="number"
+          onChange={(e) => setPahang(e.target.value)}
+          value={pahang}
+        />
+        <TextField
+          required
+          id="outlined-basic"
+          label="Penang"
+          variant="outlined"
+          className={classes.text}
+          type="number"
+          onChange={(e) => setPenang(e.target.value)}
+          value={penang}
+        />
+        <TextField
+          required
+          id="outlined-basic"
+          label="Perak"
+          variant="outlined"
+          className={classes.text}
+          type="number"
+          onChange={(e) => setPerak(e.target.value)}
+          value={perak}
+        />
+        <TextField
+          required
+          id="outlined-basic"
+          label="Perlis"
+          variant="outlined"
+          className={classes.text}
+          type="number"
+          onChange={(e) => setPerlis(e.target.value)}
+          value={perlis}
+        />
+        <TextField
+          required
+          id="outlined-basic"
+          label="Sabah"
+          variant="outlined"
+          className={classes.text}
+          type="number"
+          onChange={(e) => setSabah(e.target.value)}
+          value={sabah}
+        />
+        <TextField
+          required
+          id="outlined-basic"
+          label="Sarawak"
+          variant="outlined"
+          className={classes.text}
+          type="number"
+          onChange={(e) => setSarawak(e.target.value)}
+          value={sarawak}
+        />
+        <TextField
+          required
+          id="outlined-basic"
+          label="Terengganu"
+          variant="outlined"
+          className={classes.text}
+          type="number"
+          onChange={(e) => setTerengganu(e.target.value)}
+          value={terengganu}
+        />
+        <TextField
+          required
+          id="outlined-basic"
+          label="Kuala Lumpur"
+          variant="outlined"
+          className={classes.text}
+          type="number"
+          onChange={(e) => setLumpur(e.target.value)}
+          value={lumpur}
+        />
+        <TextField
+          required
+          id="outlined-basic"
+          label="Labuan"
+          variant="outlined"
+          className={classes.text}
+          type="number"
+          onChange={(e) => setLabuan(e.target.value)}
+          value={labuan}
+        />
+        <TextField
+          required
+          id="outlined-basic"
+          label="Putrajaya"
+          variant="outlined"
+          className={classes.text}
+          type="number"
+          onChange={(e) => setPutrajaya(e.target.value)}
+          value={putrajaya}
         />
         <TextField
           required

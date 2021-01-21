@@ -15,8 +15,9 @@ const useStyles = makeStyles({
   },
 });
 
-export const States = ({ date }) => {
+export const States = () => {
   const [negeri, setNegeri] = useState();
+  const [date, setDate] = useState();
 
   useEffect(() => {
     stateCases();
@@ -24,11 +25,13 @@ export const States = ({ date }) => {
 
   const stateCases = async () => {
     db.collection("state_cases")
+      .orderBy("date")
       .get()
       .then((querySnapshot) => {
         const data = querySnapshot.docs.map((doc) => doc.data());
 
-        setNegeri(data[0].negeri);
+        setNegeri(data[data.length - 1].negeri);
+        setDate(data[data.length - 1].date);
       });
   };
 

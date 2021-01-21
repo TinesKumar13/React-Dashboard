@@ -53,6 +53,8 @@ h3 {
 .states_Container {
   flex: 1;
   margin-left: 15rem;
+  position: relative;
+  bottom: 23rem;
 }
 
 .links {
