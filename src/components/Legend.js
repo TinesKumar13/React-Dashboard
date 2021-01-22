@@ -26,7 +26,7 @@ const Legend = () => {
     },
 
     label: {
-      fontSize: "0.6rem",
+      fontSize: "0.58rem",
       paddingRight: "1rem",
       paddingLeft: "0.1rem",
     },

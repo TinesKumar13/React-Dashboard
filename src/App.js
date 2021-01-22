@@ -9,7 +9,7 @@ import Piechart from "./components/pieChart";
 import Alltime from "./components/Alltime";
 import NegeriStat from "./components/funnelChart";
 
-const App = () => {
+const App = ({ setAuth }) => {
   const [cases, setCases] = useState();
   const [all, setAll] = useState();
 
@@ -37,7 +37,7 @@ const App = () => {
           <Link to="/updateCases" className="links">
             Update Cases
           </Link>
-          <Link to="/" className="links">
+          <Link to="/" className="links" onClick={() => setAuth(false)}>
             Logout
           </Link>
           <PersonIcon />

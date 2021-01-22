@@ -478,7 +478,7 @@ const UpdateStates = () => {
           color="secondary"
           className={classes.button}
         >
-          <Link to="/" className={classes.links}>
+          <Link to="/dashboard" className={classes.links}>
             Back To Dashboard
           </Link>
         </Button>
