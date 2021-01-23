@@ -12,6 +12,10 @@ import StorefrontIcon from "@material-ui/icons/Storefront";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import App from "../App";
+import QRCode from "react-qr-code";
+
+import db from "../firebase.config";
+import shortid from "shortid";
 
 function Copyright() {
   return (
@@ -63,6 +67,9 @@ const Login = () => {
   const [auth, setAuth] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState();
+  const [shop, setShop] = useState("");
+  const [address, setAddress] = useState("");
+  const [unique, setUnique] = useState();
 
   const user = "tineshreds@gmail.com";
   const key = "123456";
@@ -72,6 +79,36 @@ const Login = () => {
       setAuth(true);
     } else {
       alert("Wrong username or password! Please try again");
+    }
+  };
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    if (shop === "" || address === "") {
+      return <Login />;
+    } else {
+      const id = shortid.generate();
+
+      db.collection("shops")
+        .doc(id)
+        .set({
+          shop_name: shop,
+          address: address,
+        })
+        .then(() => {
+          setShop("");
+          setAddress("");
+          setUnique(id);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+
+  const shopQR = () => {
+    if (unique) {
+      return <QRCode value={unique} id={unique} />;
     }
   };
 
@@ -99,6 +136,8 @@ const Login = () => {
               name="name"
               autoComplete="name"
               autoFocus
+              value={shop}
+              onChange={(e) => setShop(e.target.value)}
             />
             <TextField
               variant="outlined"
@@ -110,6 +149,8 @@ const Login = () => {
               name="address"
               autoComplete="address"
               autoFocus
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
             />
 
             <Button
@@ -118,15 +159,16 @@ const Login = () => {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={handleSubmit}
+              onClick={handleRegister}
             >
               Register Now
             </Button>
 
-            <Box mt={5}>
+            <Box mt={3}>
               <Copyright />
             </Box>
           </form>
+          {shopQR()}
         </div>
       </Grid>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
