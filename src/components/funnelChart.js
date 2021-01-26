@@ -45,7 +45,7 @@ const NegeriStat = ({ cases }) => {
   const useStyles = makeStyles({
     root: {
       width: 495,
-      height: 475,
+      height: 485,
       position: "relative",
       left: -15,
       top: 25,

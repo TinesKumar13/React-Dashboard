@@ -12,7 +12,8 @@ import StorefrontIcon from "@material-ui/icons/Storefront";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import App from "../App";
-import QRCode from "react-qr-code";
+import "../App.css";
+import QRCode from "qrcode.react";
 
 import db from "../firebase.config";
 import shortid from "shortid";
@@ -35,13 +36,7 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
   },
   image: {
-    backgroundRepeat: "no-repeat",
-    backgroundColor:
-      theme.palette.type === "light"
-        ? theme.palette.grey[50]
-        : theme.palette.grey[900],
-    backgroundSize: "cover",
-    backgroundPosition: "center",
+    background: "linear-gradient(to right top, #65dfc9, #6cdbeb)",
   },
   paper: {
     margin: theme.spacing(8, 4),
@@ -59,6 +54,10 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+  },
+  input: {
+    background:
+      "linear-gradient(to right bottom,rgba(255, 255, 255, 0.7),rgba(255, 255, 255, 0.3))",
   },
 }));
 
@@ -106,14 +105,45 @@ const Login = () => {
     }
   };
 
+  const downloadQRCode = () => {
+    // Generate download with use canvas and stream
+    const canvas = document.getElementById("qr-gen");
+    const pngUrl = canvas
+      .toDataURL("image/png")
+      .replace("image/png", "image/octet-stream");
+    let downloadLink = document.createElement("a");
+    downloadLink.href = pngUrl;
+    downloadLink.download = `${unique}.png`;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  };
+
   const shopQR = () => {
     if (unique) {
-      return <QRCode value={unique} id={unique} />;
+      return (
+        <div>
+          <QRCode
+            value={unique}
+            id="qr-gen"
+            size={290}
+            level={"H"}
+            includeMargin={true}
+          />
+
+          <p>
+            <button type="button" onClick={downloadQRCode}>
+              Download QR Code
+            </button>
+          </p>
+        </div>
+      );
+    } else {
     }
   };
 
   return auth ? (
-    <App setAuth={setAuth} />
+    <App setAuth={setAuth} auth={auth} />
   ) : (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -138,6 +168,7 @@ const Login = () => {
               autoFocus
               value={shop}
               onChange={(e) => setShop(e.target.value)}
+              className={classes.input}
             />
             <TextField
               variant="outlined"
@@ -151,6 +182,7 @@ const Login = () => {
               autoFocus
               value={address}
               onChange={(e) => setAddress(e.target.value)}
+              className={classes.input}
             />
 
             <Button
@@ -192,6 +224,7 @@ const Login = () => {
               autoFocus
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              className={classes.input}
             />
             <TextField
               variant="outlined"
@@ -205,6 +238,7 @@ const Login = () => {
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              className={classes.input}
             />
 
             <Button

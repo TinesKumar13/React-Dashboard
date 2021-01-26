@@ -7,6 +7,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import UpdateStates from "./components/updateStates";
 import Login from "./components/Login";
 
+import UserTracker from "./components/UserTracker";
+
 ReactDOM.render(
   <React.StrictMode>
     <Router>
@@ -16,6 +18,8 @@ ReactDOM.render(
         <Route path="/dashboard" exact component={App} />
 
         <Route path="/updateCases" exact component={UpdateStates} />
+
+        <Route path="/usertrack/:id" exact component={UserTracker}></Route>
       </Switch>
     </Router>
   </React.StrictMode>,

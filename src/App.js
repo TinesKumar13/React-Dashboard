@@ -8,8 +8,9 @@ import { Link } from "react-router-dom";
 import Piechart from "./components/pieChart";
 import Alltime from "./components/Alltime";
 import NegeriStat from "./components/funnelChart";
+import Shops from "./components/Shops";
 
-const App = ({ setAuth }) => {
+const App = ({ setAuth, auth }) => {
   const [cases, setCases] = useState();
   const [all, setAll] = useState();
 
@@ -76,7 +77,9 @@ const App = ({ setAuth }) => {
             {cases && <Alltime cases={all} />}
           </div>
           {cases && <NegeriStat cases={cases} />}
+          <Shops />
         </div>
+
         <div className="states_Container">
           <States />
         </div>

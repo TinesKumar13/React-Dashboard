@@ -6,9 +6,10 @@
 
 .main__Header {
   display: flex;
-  width: 95%;
+  width: 55%;
   margin: auto;
   justify-content: space-between;
+  position: relative;
 }
 
 h1 {
@@ -23,6 +24,8 @@ h1 {
   display: flex;
   margin: 40px 40px 20px;
   justify-content: space-evenly;
+  position: absolute;
+  right: 55px;
 }
 
 h3 {
@@ -76,4 +79,13 @@ h3 {
   align-items: center;
   position: relative;
   left: 20rem;
+}
+
+button {
+  border: 0;
+  padding: 3.5rem;
+  color: #222;
+  font-size: 1.3rem;
+  background: #eee;
+  border-radius: var(--space);
 }
