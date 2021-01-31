@@ -57,17 +57,21 @@ const Shops = () => {
   };
 
   useEffect(() => {
-    fetchCases();
-  }, [rows]);
+   return db.collection("users").onSnapshot(snapshot => {
+     const usersdata = [];
+     snapshot.forEach(doc => usersdata.push({...doc.data()}))
+     setRows(usersdata)
+   })
+  }, []);
 
-  const fetchCases = async () => {
+/*  const fetchCases = async () => {
     db.collection("users")
       .get()
       .then((querySnapshot) => {
         const data = querySnapshot.docs.map((doc) => doc.data());
         setRows(data);
       });
-  };
+  };*/
 
   return (
     <Paper className={classes.root}>

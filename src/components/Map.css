@@ -40,3 +40,11 @@
   -o-animation: up-right 1s infinite;
   animation: up-right 1s infinite;
 }
+
+.last__Seen{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 20%;
+
+}

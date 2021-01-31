@@ -93,6 +93,7 @@ const Login = () => {
         .set({
           shop_name: shop,
           address: address,
+          id : id
         })
         .then(() => {
           setShop("");

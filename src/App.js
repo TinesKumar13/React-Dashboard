@@ -9,6 +9,7 @@ import Piechart from "./components/pieChart";
 import Alltime from "./components/Alltime";
 import NegeriStat from "./components/funnelChart";
 import Shops from "./components/Shops";
+import Shopping from "./components/Shoppping";
 
 const App = ({ setAuth, auth }) => {
   const [cases, setCases] = useState();
@@ -82,8 +83,14 @@ const App = ({ setAuth, auth }) => {
 
         <div className="states_Container">
           <States />
+
         </div>
+
       </div>
+
+      <Shopping/>
+
+
     </div>
   );
 };
