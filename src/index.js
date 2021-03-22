@@ -8,14 +8,19 @@ import UpdateStates from "./components/updateStates";
 import Login from "./components/Login";
 
 import UserTracker from "./components/UserTracker";
+import Stats from "./components/Stats";
+import Code from "./components/Code";
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
       <Switch>
         <Route path="/" exact component={Login} />
+        <Route path="/qrNew" exact component={Code} />
 
         <Route path="/dashboard" exact component={App} />
+
+        <Route path="/states/stats" exact component={Stats} />
 
         <Route path="/updateCases" exact component={UpdateStates} />
 

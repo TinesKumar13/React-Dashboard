@@ -17,6 +17,7 @@ import QRCode from "qrcode.react";
 
 import db from "../firebase.config";
 import shortid from "shortid";
+import {Link as Linker} from "react-router-dom"
 
 function Copyright() {
   return (
@@ -59,6 +60,10 @@ const useStyles = makeStyles((theme) => ({
     background:
       "linear-gradient(to right bottom,rgba(255, 255, 255, 0.7),rgba(255, 255, 255, 0.3))",
   },
+  shop : {
+    display: "flex",
+    flexDirection: "column"
+  }
 }));
 
 const Login = () => {
@@ -68,6 +73,7 @@ const Login = () => {
   const [password, setPassword] = useState();
   const [shop, setShop] = useState("");
   const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("")
   const [unique, setUnique] = useState();
 
   const user = "tineshreds@gmail.com";
@@ -81,6 +87,10 @@ const Login = () => {
     }
   };
 
+  const handleLogout = () => {
+    setAuth(false)
+  }
+
   const handleRegister = async (e) => {
     e.preventDefault();
     if (shop === "" || address === "") {
@@ -93,7 +103,9 @@ const Login = () => {
         .set({
           shop_name: shop,
           address: address,
-          id : id
+          phone : phone,
+          id : id,
+          last_check_in : "-1"
         })
         .then(() => {
           setShop("");
@@ -132,11 +144,18 @@ const Login = () => {
             includeMargin={true}
           />
 
-          <p>
-            <button type="button" onClick={downloadQRCode}>
+          <p className={classes.shop}>
+            <button type="button" onClick={downloadQRCode} >
               Download QR Code
+
             </button>
+          *Your Shop ID : {unique} 
+       
+
+            
           </p>
+          <p>*Note this ID in case you lose your QR Code</p>
+
         </div>
       );
     } else {
@@ -144,7 +163,7 @@ const Login = () => {
   };
 
   return auth ? (
-    <App setAuth={setAuth} auth={auth} />
+    <App setAuth={handleLogout} auth={auth} />
   ) : (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -186,6 +205,21 @@ const Login = () => {
               className={classes.input}
             />
 
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="phone"
+              label="Contact Number"
+              name="phone"
+              autoComplete="phone"
+              autoFocus
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className={classes.input}
+            />
+
             <Button
               type="submit"
               fullWidth
@@ -196,7 +230,7 @@ const Login = () => {
             >
               Register Now
             </Button>
-
+    Lost your QR Code ? <Linker to="/qrNew">Click Here</Linker>
             <Box mt={3}>
               <Copyright />
             </Box>

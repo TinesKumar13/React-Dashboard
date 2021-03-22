@@ -1,22 +1,30 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { MapContainer, TileLayer, CircleMarker , Popup} from "react-leaflet";
 import Checkbox from '@material-ui/core/Checkbox';
 import "./Map.css";
 import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
+import db from '../firebase.config';
 
-const MapShower = ({locations}) => {
+
+const MapShower = ({locations, profile}) => {
  
-    
+   
     const val = []
     const redOptions = { color: "red" };
-    const [checked, setChecked] = useState(false);
+    const [last, setLast] = useState(false);
+  
 
+
+
+
+ 
     const handleChange = () => {
-      setChecked(!checked)
+      setLast(!last)
     };
 
+ 
 
   
             
@@ -43,6 +51,7 @@ const MapShower = ({locations}) => {
             return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
         }
 
+  
 
       
     return (
@@ -51,7 +60,7 @@ const MapShower = ({locations}) => {
         <div>
                 <div className="last__Seen">
                         <Checkbox
-                checked={checked}
+                checked={last}
                 onChange={handleChange}
                 inputProps={{ 'aria-label': 'primary checkbox' }}
             />
@@ -72,7 +81,7 @@ const MapShower = ({locations}) => {
         { 
             
 
-            checked ?      <CircleMarker center={val[val.length - 1]}                 
+            last ?      <CircleMarker center={val[val.length - 1]}                 
             pathOptions={redOptions}
             radius={35}
             className="circle red"

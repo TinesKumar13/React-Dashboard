@@ -7,7 +7,7 @@ import CountUp from "react-countup";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import ProgressProvider from "./ProgressProvider";
-
+import { motion } from "framer-motion";
 const SimpleCard = ({ title, cases, colour, date, total }) => {
   const useStyles = makeStyles({
     root: {
@@ -50,6 +50,18 @@ const SimpleCard = ({ title, cases, colour, date, total }) => {
   // expected output "8/30/2017"
 
   return (
+    <motion.div     
+   
+    initial={{ scale: 0 }}
+    animate={{ rotate: 360, scale: 1 }}
+    transition={{
+      type: "spring",
+      stiffness: 200,
+      damping: 45
+    }}
+    whileHover={{ scale: 1.1 }}
+    whileTap={{ scale: 0.9 }}
+    >
     <Card className={classes.root}>
       <CardContent>
         <Typography
@@ -71,7 +83,7 @@ const SimpleCard = ({ title, cases, colour, date, total }) => {
           {(value) => (
             <CircularProgressbar
               value={value}
-              maxValue={919500}
+              maxValue={9195}
               pathColor={colour}
               className={classes.progress}
               styles={buildStyles({
@@ -87,6 +99,7 @@ const SimpleCard = ({ title, cases, colour, date, total }) => {
         </Typography>
       </CardContent>
     </Card>
+    </motion.div>
   );
 };
 

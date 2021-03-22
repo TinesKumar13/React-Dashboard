@@ -57,7 +57,7 @@ h3 {
   flex: 1;
   margin-left: 15rem;
   position: relative;
-  bottom: 23rem;
+  top: -7rem;
 }
 
 .links {
@@ -89,3 +89,13 @@ button {
   background: #eee;
   border-radius: var(--space);
 }
+
+
+.state__box{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ flex-direction: column;
+  height: 100vh;
+}
+

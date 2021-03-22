@@ -10,6 +10,8 @@ import Alltime from "./components/Alltime";
 import NegeriStat from "./components/funnelChart";
 import Shops from "./components/Shops";
 import Shopping from "./components/Shoppping";
+import { motion } from "framer-motion";
+
 
 const App = ({ setAuth, auth }) => {
   const [cases, setCases] = useState();
@@ -39,7 +41,7 @@ const App = ({ setAuth, auth }) => {
           <Link to="/updateCases" className="links">
             Update Cases
           </Link>
-          <Link to="/" className="links" onClick={() => setAuth(false)}>
+          <Link to="/" className="links" onClick={setAuth}>
             Logout
           </Link>
           <PersonIcon />
@@ -78,7 +80,9 @@ const App = ({ setAuth, auth }) => {
             {cases && <Alltime cases={all} />}
           </div>
           {cases && <NegeriStat cases={cases} />}
-          <Shops />
+
+         <Shops />
+        
         </div>
 
         <div className="states_Container">
@@ -88,7 +92,11 @@ const App = ({ setAuth, auth }) => {
 
       </div>
 
-      <Shopping/>
+
+
+<Shopping/>
+
+     
 
 
     </div>

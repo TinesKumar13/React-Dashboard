@@ -4,6 +4,7 @@ import React from "react";
 import { PieChart } from "react-minimal-pie-chart";
 import Legend from "./Legend";
 import Typography from "@material-ui/core/Typography";
+import { motion } from "framer-motion";
 
 const Piechart = ({ cases }) => {
   const useStyles = makeStyles({
@@ -43,7 +44,9 @@ const Piechart = ({ cases }) => {
   var s = new Date(date.seconds * 1000).toLocaleDateString();
   const classes = useStyles();
   return (
-    <div>
+    <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 1.5 }}
+    whileHover={{ scale: 1.1 }}
+    whileTap={{ scale: 0.9 }}>
       <Card className={classes.root}>
         <CardContent>
           <Typography
@@ -74,7 +77,7 @@ const Piechart = ({ cases }) => {
           <Legend />
         </CardContent>
       </Card>
-    </div>
+    </motion.div>
   );
 };
 

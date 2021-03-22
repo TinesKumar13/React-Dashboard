@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { FunnelChart, Tooltip, Funnel, LabelList } from "recharts";
+import {motion} from "framer-motion"
 
 const NegeriStat = ({ cases }) => {
   const negeri = cases[0].negeri.sort(function (a, b) {
@@ -88,7 +89,9 @@ const NegeriStat = ({ cases }) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.main}>
+    <motion.div classname={classes.main} initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 1.5 }}
+    whileHover={{ scale: 1.1 }}
+    whileTap={{ scale: 0.9 }}>
       <Card className={classes.root}>
         <CardContent>
           <Typography
@@ -112,7 +115,7 @@ const NegeriStat = ({ cases }) => {
           </FunnelChart>
         </CardContent>
       </Card>
-    </div>
+    </motion.div>
   );
 };
 

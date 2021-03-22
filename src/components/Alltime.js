@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   LineChart,
   XAxis,
@@ -11,6 +11,7 @@ import {
 import { Card, CardContent } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import {motion} from "framer-motion"
 
 const Alltime = ({ cases }) => {
   const useStyles = makeStyles({
@@ -48,7 +49,9 @@ const Alltime = ({ cases }) => {
     });
 
   return (
-    <div>
+    <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 1.5 }}     
+    whileHover={{ scale: 1.1 }}
+    whileTap={{ scale: 0.9 }}>
       <Card className={classes.root}>
         <CardContent className={classes.content}>
           <Typography
@@ -75,7 +78,7 @@ const Alltime = ({ cases }) => {
           </LineChart>
         </CardContent>
       </Card>
-    </div>
+    </motion.div>
   );
 };
 

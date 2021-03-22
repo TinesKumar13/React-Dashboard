@@ -15,6 +15,10 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import "./Map.css";
 import MapShower from "./Map";
+import Restaurant from "./Restaurant"
+import moment from "moment"
+import { CSVLink } from "react-csv";
+import Toggle from "./Toggle";
 
 
 
@@ -31,6 +35,17 @@ const UserTracker = () => {
   const [location, setLocation] = useState([])
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [proximity, setProximity] = useState([])
+  const [users, setUsers] = useState([])
+  const [shops, setShops] = useState([])
+  const [visited, setVisited] = useState([])
+
+
+  var nowDate = moment().unix()
+  var pastDate = moment().subtract(14, 'days').unix()
+
+
+
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -46,18 +61,32 @@ const UserTracker = () => {
   let { id } = useParams();
   let trimmed = id.trim()
 
+
+
+
   useEffect(() => {
  
     return db.collection("users").doc(trimmed).collection("check_in")
+    .where("date", ">", beginningDateObject)
     .orderBy("date")
     .onSnapshot(snapshot => {
       const detailData = []
+      const seen = new Set()
       snapshot.forEach(doc => detailData.push({...doc.data()}))
+      const filteredArr = detailData.filter(el => {
+        const duplicate = seen.has(el.shop_id);
+        seen.add(el.shop_id);
+        return !duplicate;
+      });
+    
       setDetails(detailData)
+      setVisited(filteredArr)
     })
 
    
   },[])
+
+
 
 
   useEffect(() => {
@@ -70,6 +99,7 @@ const UserTracker = () => {
   useEffect(() => {
  
   return db.collection("users").doc(trimmed).collection("location")
+          .where("time", ">", beginningDateObject)//remove this for all location
           .orderBy("time")
           .onSnapshot(snapshot => {
             const locationData = []
@@ -80,6 +110,35 @@ const UserTracker = () => {
    
   },[])
 
+  var beginningDate = Date.now() - 1209600000 ;
+var beginningDateObject = new Date(beginningDate);
+
+
+
+  useEffect(() => {
+ 
+    return db.collection("users").doc(trimmed).collection("close_contact")
+            .orderBy("date")
+            .where('date', '>', beginningDateObject)
+
+            .onSnapshot(snapshot => {
+              const proximityData = []
+              const seen = new Set()
+              snapshot.forEach(doc => proximityData.push({...doc.data()}))
+             
+             const filteredArr = proximityData.filter(el => {
+                const duplicate = seen.has(el.user_id);
+                seen.add(el.user_id);
+                return !duplicate;
+              });
+            
+            
+              setProximity(filteredArr)
+      
+            })
+  
+     
+    },[])
 
 
 
@@ -110,13 +169,24 @@ const UserTracker = () => {
   }
 
 
+  useEffect(() => {
+    return db.collection("users").onSnapshot(snapshot => {
+      const usersdata = [];
+      snapshot.forEach(doc => usersdata.push({...doc.data()}))
+      setUsers(usersdata)
+    
+    })
+   }, []);
+
+
+
 
 
 
 
   const useStyles = makeStyles({
     root: {
-      width: 475,
+      width: 375,
       height: 505,
       margin: 30,
     
@@ -133,7 +203,9 @@ const UserTracker = () => {
       display : "flex",
       alignItems: "center",
       height: 600,
-      justifyContent: "center",
+      width: "80%",
+      justifyContent: "space-evenly",
+
     
     },
 
@@ -144,13 +216,20 @@ const UserTracker = () => {
    
     },
     rootPaper: {
-      width: 475,
+      width: 505,
       height: 505,
 
     },
     containerPaper: {
       height: 450,
     },
+
+    download : {
+      position : "absolute",
+      bottom : 585,
+      paddingLeft: "1rem"
+    },
+   
 
   });
 
@@ -167,6 +246,75 @@ const UserTracker = () => {
     }
   
   ];
+
+
+  const column = [
+    { id: 'customerName', label: 'Name', minWidth: 170, 
+    format: (value) => value.displayName },
+
+        
+    { id: 'icNumber', label: 'IC', minWidth: 170, 
+    format: (value) => value.ic },
+    
+    { id: 'contactNumber', label: 'Phone', minWidth: 170, 
+    format: (value) => value.phoneNumber },
+
+  
+    {
+      id: 'date',
+      label: 'Date & Time',
+      minWidth: 150,
+  
+    }
+  
+  ];
+
+  const data = []
+
+
+  
+  
+
+
+
+  proximity && proximity.map(p => {
+  
+    data.push({
+     
+      customerName: users.find(user => {
+        if(user.id === p.user_id)  {
+        return user.displayName
+        }
+      }),
+
+      icNumber: users.find(user => {
+        if(user.id === p.user_id)  {
+        return user.displayName
+        }
+      }),
+     
+      contactNumber: users.find(user => {
+        if(user.id === p.user_id)  {
+        return user.displayName
+        }
+      }),
+  
+      date : new Date(p.date.seconds * 1000).toLocaleString()
+      
+    })
+
+return data
+
+  })
+
+
+  const headers = [
+    { label: "Name", key: "customerName.displayName"},
+    { label: "IC", key: "icNumber.ic"},
+    { label: "Phone Number", key: "contactNumber.phoneNumber" },
+    { label: "Date & Time", key: "date"}
+  ];
+
 
  
 
@@ -216,6 +364,7 @@ return  (
         </Typography>
         ))}
         </CardContent>
+        {profile && <Toggle profile={profile}/>}
       </Card>
 
       <Paper className={classes.rootPaper}>
@@ -263,10 +412,64 @@ return  (
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
     </Paper>
+
+    <Paper className={classes.rootPaper}>
+      <TableContainer className={classes.containerPaper}>
+        <Table stickyHeader aria-label="sticky table">
+          <TableHead>
+            <TableRow>
+              {column.map((c) => (
+                <TableCell
+                  key={c.id}
+                  align={c.align}
+                  style={{ minWidth: c.minWidth }}
+                >
+                  {c.label}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((d) => {
+              return (
+                <TableRow hover role="checkbox" tabIndex={-1} key={d.customerName}>
+                  {column.map((c) => {
+                    const value = d[c.id]
+                
+                    return (
+                      <TableCell key={c.id} align={c.align}>
+                        {c.format && typeof value === 'object' ? c.format(value):value}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              );
+            })}
+          </TableBody>
+
+        </Table>
+
+      </TableContainer>
+      
+      <TablePagination
+        rowsPerPageOptions={[10, 25, 100]}
+        component="div"
+        count={location.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onChangePage={handleChangePage}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
+      />
+            <CSVLink data={data} headers={headers} className={classes.download}>
+  Download CSV 
+</CSVLink>
+    </Paper>
+    <Restaurant date={beginningDateObject} visited={visited} customers={users} profile={profile}/>
     </div>
 
-        {location.length && <MapShower locations={location}/> }
-
+        {location.length > 0 && <MapShower locations={location} profile={profile}/> }
+      
+    
   </div>
   )
 };
