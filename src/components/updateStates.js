@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "3rem",
   },
   button: {
-    marginLeft: "4.5rem",
+    marginLeft: "3rem",
   },
 
   links: {
