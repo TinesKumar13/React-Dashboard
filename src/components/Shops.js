@@ -100,6 +100,7 @@ const Shops = () => {
     return db.collection("users").onSnapshot(snapshot => {
       const usersdata = [];
       snapshot.forEach(doc => usersdata.push({...doc.data()}))
+    
       setRows(usersdata)
       setCheck(usersdata)
     })

@@ -81,6 +81,7 @@ const classes = useStyles();
     })
     },
     { id: 'temperature', label: 'Temperature', minWidth: 100 },
+    { id: 'env_temp', label: 'Env Temperature', minWidth: 100 },
     {
       id: 'date',
       label: 'Date & Time',
@@ -93,6 +94,7 @@ const classes = useStyles();
   const headers = [
     { label: "Customer Name", key: "customerName.displayName"},
     { label: "Temperature", key: "temperature" },
+    { label: " Env Temperature", key: "env_temp" },
     { label: "Date & Time", key: "date"}
   ];
 
@@ -149,7 +151,7 @@ try {
   
       snapshot.forEach(doc => detailData.push({...doc.data()}))
       setDetail(detailData)
-
+        
       setFormat(detailData)
   })
 
@@ -175,6 +177,8 @@ format && format.map(f => {
       }
     }),
     temperature : f.temperature,
+
+    env_temp : f.env_temp,
 
     date : new Date(f.date.seconds * 1000).toLocaleString()
   })

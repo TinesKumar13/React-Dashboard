@@ -5,6 +5,7 @@ import React from "react";
 // component in ProgressProviderUsingClass.js
 const ProgressProvider = ({ valueStart, valueEnd, children }) => {
   const [value, setValue] = React.useState(valueStart);
+  console.log(valueEnd)
   React.useEffect(() => {
     setValue(valueEnd);
   }, [valueEnd]);

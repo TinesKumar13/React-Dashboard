@@ -48,7 +48,7 @@ const SimpleCard = ({ title, cases, colour, date, total }) => {
   const classes = useStyles();
   var s = new Date(date.seconds * 1000).toLocaleDateString();
   // expected output "8/30/2017"
-
+  var percentageCases = (cases/total)*100
   return (
     <motion.div     
    
@@ -79,11 +79,11 @@ const SimpleCard = ({ title, cases, colour, date, total }) => {
         <Typography className={classes.counter}>
           <CountUp end={total} className={classes.counter} />
         </Typography>
-        <ProgressProvider valueStart={10} valueEnd={total}>
+        <ProgressProvider valueStart={0} valueEnd={percentageCases}>
           {(value) => (
             <CircularProgressbar
               value={value}
-              maxValue={9195}
+              maxValue={100}
               pathColor={colour}
               className={classes.progress}
               styles={buildStyles({

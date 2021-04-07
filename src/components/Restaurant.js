@@ -71,6 +71,8 @@ const useStyles = makeStyles({
     { id: 'contactNumber', label: 'Phone', minWidth: 170, 
     format: (value) => value.phoneNumber },
 
+    { id: 'temperature', label: 'Temperature', minWidth: 100 },
+    { id: 'env_temp', label: 'Env Temperature', minWidth: 100 },
   
     {
       id: 'date',
@@ -85,6 +87,8 @@ const useStyles = makeStyles({
     { label: "Name", key: "customerName.displayName"},
     { label: "IC", key: "icNumber.ic"},
     { label: "Phone Number", key: "contactNumber.phoneNumber" },
+    { label: "Temperature", key: "temperature" },
+    { label: " Env Temperature", key: "env_temp" },
     { label: "Date & Time", key: "date"}
   ];
 
@@ -195,6 +199,11 @@ format && format.map(f => {
       return user.displayName
       }
     }),
+
+    temperature : f.temperature,
+
+    env_temp : f.env_temp,
+
 
     date : new Date(f.date.seconds * 1000).toLocaleString()
 
